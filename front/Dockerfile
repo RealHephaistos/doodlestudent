@@ -3,7 +3,7 @@ FROM node:lts-alpine3.19 as front-build
 WORKDIR /app
 
 # Installation des dépendances et construction de l'application
-COPY front/ ./front
+COPY . ./front
 RUN cd front &&\
     npm install &&\
     npm run build
