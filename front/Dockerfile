@@ -8,6 +8,6 @@ RUN cd front &&\
     npm install &&\
     npm run build
 
-# Construction des images docker
+# Construction de l'images docker front-end
 FROM nginx:1.19.2-alpine
 COPY --from=front-build /app/front/dist/tlcfront /usr/share/nginx/html

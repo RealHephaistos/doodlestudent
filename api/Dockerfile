@@ -1,5 +1,5 @@
 # Build du back-end de l'application
-FROM maven:3.8.1-jdk-11 as backend-build
+FROM maven as backend-build
 WORKDIR /app
 
 # Installation des dépendances et construction de l'application
@@ -7,8 +7,7 @@ COPY . ./api
 RUN cd api &&\
     mvn clean package -DskipTests
 
-# Construction des images docker
-FROM nginx:alpine
-
-# Back-end
-COPY --from=backend-build /app/api/target/tlcapi-0.0.1-SNAPSHOT.jar /app.jar
+# Construction de l'images docker back-end
+FROM openjdk
+COPY --from=backend-build /app/api/target/tlcdemoApp-1.0.0-SNAPSHOT.jar /app/
+CMD ["java", "-jar", "/app/tlcdemoApp-1.0.0-SNAPSHOT.jar"]
