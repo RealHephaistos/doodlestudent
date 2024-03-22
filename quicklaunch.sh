@@ -14,17 +14,31 @@ run_frontend() {
     cd ..
 }
 
-if [ "$1" = "backend" ]; then
-    run_backend
-fi
+clean() {
+    echo "Cleaning up..."
+    sudo docker-compose down
+    sudo docker rmi mhib/tlcbackend
+    sudo docker rmi mhib/tlcfrontend
+}
 
-if [ "$1" = "front" ]; then
-    run_frontend
-fi
-
-if [ "$1" = "backend" ] && [ "$2" = "front" ]; then
+for i in "$@"
+do
+case $i in
+    -c|--clean)
+    clean
+    shift
+    ;;
+    -b|--backend)
     run_backend
+    shift
+    ;;
+    -f|--front)
     run_frontend
-fi
+    shift
+    ;;
+    *)
+    ;;
+esac
+done
 
 sudo docker-compose up -d
