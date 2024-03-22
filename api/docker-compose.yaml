@@ -1,5 +1,28 @@
 version: "3.8"
 services:
+
+  # Frontend
+  frontend:
+    image: mhib/tlcfrontend
+    container_name: container_frontend
+    hostname: frontend
+    ports:
+      - "80:80"
+    depends_on:
+        - backend
+        - phpmyadmin
+        - etherpad
+
+  # Backend
+  backend:
+    image: mhib/tlcbackend
+    container_name: container_backend
+    hostname: backend
+    ports:
+      - "80:80"
+    depends_on:
+        - db
+
   db:
     image: mysql
     ports:
@@ -9,12 +32,14 @@ services:
       - MYSQL_DATABASE=tlc
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
+
   etherpad:
     image: etherpad/etherpad
     ports:
       - "9001:9001"
     volumes:
       - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
+
   mail:
     image: bytemark/smtp
     restart: always
