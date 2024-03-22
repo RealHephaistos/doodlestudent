@@ -1,4 +1,3 @@
-sudo docker system prune -a -f
 cd api
 sudo docker build -t mhib/tlcbackend .
 sudo docker run -d --name tlc-backend -p 80:80 mhib/tlcbackend
