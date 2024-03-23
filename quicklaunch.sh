@@ -12,11 +12,6 @@ clean() {
     sudo rm api/backend.tar
     sudo rm front/frontend.tar
 
-    # Retire les ips du fichier hosts
-    sudo sed -i '/api/d' /etc/hosts
-    sudo sed -i '/myadmin/d' /etc/hosts
-    sudo sed -i '/etherpad/d' /etc/hosts
-
     # Retire les configurations nginx
     sudo rm /etc/nginx/sites-enabled/tlc
     sudo service nginx restart
@@ -56,16 +51,6 @@ compose() {
     echo ""
 }
 
-config_dns() {
-    echo "Configuring DNS..."
-    sudo echo "# TLC" >> /etc/hosts
-    sudo echo "127.0.0.1 api" >> /etc/hosts
-    sudo echo "127.0.0.1 myadmin" >> /etc/hosts
-    sudo echo "127.0.0.1 etherpad" >> /etc/hosts
-    echo ""
-    #TODO: Add DNS configuration based on docker network IP
-}
-
 set_nginx_config(){
     echo "Setting up nginx configuration..."
     sudo cp nginx.conf /etc/nginx/sites-available/tlc
@@ -83,7 +68,6 @@ show_help() {
     echo "-f, --front: Build and save the frontend image"
     echo "-p, --push: Push images to Docker registry"
     echo "-d, --docker-compose: Run docker-compose"
-    echo "-C, --config-dns: Configure DNS IP addresses for the services"
     echo "-n, --nginx: Set up nginx configuration"
     echo "-a, --all: Clean, build and run all services"
     echo ""
@@ -119,10 +103,6 @@ do
         ;;
         -d|--docker-compose)
             compose
-            shift
-        ;;
-        -C|--config-dns)
-            config_dns
             shift
         ;;
         -n|--nginx)
