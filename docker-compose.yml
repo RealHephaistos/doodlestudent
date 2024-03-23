@@ -7,7 +7,7 @@ services:
     container_name: container_frontend
     hostname: frontend
     ports:
-      - "8080:80"
+      - "1080:80"
     depends_on:
         - backend
         - etherpad
@@ -17,6 +17,8 @@ services:
     image: mhib/tlcbackend
     container_name: container_backend
     hostname: backend
+    ports:
+      - "1081:80"
     depends_on:
         - db
 

@@ -17,8 +17,9 @@ run_frontend() {
 clean() {
     echo "Cleaning up..."
     sudo docker-compose down
-    sudo docker rmi mhib/tlcbackend
     sudo docker rmi mhib/tlcfrontend
+    sudo docker rmi mhib/tlcbackend
+    sudo sed -i '/# TLC/d' /etc/hosts
     sudo sed -i '/mhib.myadmin.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.doodle.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.pad.tlc.fr/d' /etc/hosts
@@ -31,15 +32,13 @@ compose() {
 
 config_dns() {
     echo "Configuring DNS..."
+    sudo echo "# TLC" >> /etc/hosts
     sudo echo "127.0.0.1 mhib.myadmin.tlc.fr" >> /etc/hosts
     sudo echo "127.0.0.1 mhib.doodle.tlc.fr" >> /etc/hosts
     sudo echo "127.0.0.1 mhib.pad.tlc.fr" >> /etc/hosts
 }
 
-for i in "$@"
-do
-case $i in
-    -h|--help)
+show_help() {
     echo "Usage: quicklaunch.sh [OPTION]"
     echo "Options:"
     echo "-h, --help: Display this help message"
@@ -49,6 +48,18 @@ case $i in
     echo "-d, --docker-compose: Run docker-compose"
     echo "-C, --config-dns: Configure DNS"
     echo "-a, --all: Clean, build and run all services"
+}
+
+if(( $# == 0 )); then
+    show_help
+    exit 1
+fi
+
+for i in "$@"
+do
+case $i in
+    -h|--help)
+    show_help
     shift
     ;;
     -c|--clean)
