@@ -9,14 +9,14 @@ services:
     ports:
       - "15080:80"
     depends_on:
-        - backend
+        - api
         - etherpad
 
   # Backend
-  backend:
+  api:
     image: mhib/tlcbackend
-    container_name: container_backend
-    hostname: backend
+    container_name: container_api
+    hostname: api
     depends_on:
         - db
 
