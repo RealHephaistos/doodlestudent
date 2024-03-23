@@ -102,6 +102,7 @@ case $i in
     run_backend
     run_frontend
     compose
+    set_nginx_config
     shift
     ;;
     *)
