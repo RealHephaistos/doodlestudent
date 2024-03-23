@@ -5,7 +5,7 @@ WORKDIR /app
 # Installation des dépendances et construction de l'application
 COPY . ./api
 RUN cd api &&\
-    ./mvnw clean package
+    mvn clean package
 
 # Construction de l'images docker back-end
 FROM openjdk
