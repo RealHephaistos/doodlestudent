@@ -53,7 +53,7 @@ push_images() {
 compose() {
     echo "Running docker-compose..."
     sudo docker-compose up -d
-    echo "\n"
+    echo ""
 }
 
 config_dns() {
