@@ -25,6 +25,7 @@ services:
     image: mysql
     ports:
       - "3306:3306"
+    container_name: container_db
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=tlc
@@ -33,6 +34,7 @@ services:
 
   etherpad:
     image: etherpad/etherpad
+    container_name: container_etherpad
     ports:
       - "9001:9001"
     volumes:
@@ -40,6 +42,7 @@ services:
 
   mail:
     image: bytemark/smtp
+    container_name: container_mail
     restart: always
     ports:
       - "2525:25"
