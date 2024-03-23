@@ -19,11 +19,38 @@ clean() {
     sudo docker-compose down
     sudo docker rmi mhib/tlcbackend
     sudo docker rmi mhib/tlcfrontend
+    sudo sed -i '/mhib.myadmin.tlc.fr/d' /etc/hosts
+    sudo sed -i '/mhib.doodle.tlc.fr/d' /etc/hosts
+    sudo sed -i '/mhib.pad.tlc.fr/d' /etc/hosts
+}
+
+compose() {
+    echo "Running docker-compose..."
+    sudo docker-compose up -d
+}
+
+config_dns() {
+    echo "Configuring DNS..."
+    sudo echo "127.0.0.1 mhib.myadmin.tlc.fr" >> /etc/hosts
+    sudo echo "127.0.0.1 mhib.doodle.tlc.fr" >> /etc/hosts
+    sudo echo "127.0.0.1 mhib.pad.tlc.fr" >> /etc/hosts
 }
 
 for i in "$@"
 do
 case $i in
+    -h|--help)
+    echo "Usage: quicklaunch.sh [OPTION]"
+    echo "Options:"
+    echo "-h, --help: Display this help message"
+    echo "-c, --clean: Clean up docker containers and images"
+    echo "-b, --backend: Build and run the backend service"
+    echo "-f, --front: Build and run the frontend service"
+    echo "-d, --docker-compose: Run docker-compose"
+    echo "-C, --config-dns: Configure DNS"
+    echo "-a, --all: Clean, build and run all services"
+    shift
+    ;;
     -c|--clean)
     clean
     shift
@@ -36,9 +63,23 @@ case $i in
     run_frontend
     shift
     ;;
+    -d|--docker-compose)
+    compose
+    shift
+    ;;
+    -C|--config-dns)
+    config_dns
+    shift
+    ;;
+    -a | --all)
+    clean
+    config_dns
+    run_backend
+    run_frontend
+    compose
+    shift
+    ;;
     *)
     ;;
 esac
 done
-
-sudo docker-compose up -d
