@@ -20,7 +20,7 @@ services:
     hostname: api
     depends_on:
         db :
-          condition: service_started
+          condition: service_healthy
     restart: on_failure # Redémarre le service si la base de données n'est pas prête
 
   db:
@@ -35,7 +35,7 @@ services:
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
     healthcheck: # Attends que la base de données soit prête
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER -p $$MYSQL_PASSWORD"]
+      test: ["CMD", "mysqladmin ping -h localhost --user=$$MYSQL_USER -password=$$MYSQL_PASSWORD"]
       interval: 30s
       timeout: 5s
       retries: 10
