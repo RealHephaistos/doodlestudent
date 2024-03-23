@@ -7,7 +7,7 @@ services:
     container_name: container_frontend
     hostname: frontend
     ports:
-      - "80:80"
+      - "15080:80"
     depends_on:
         - backend
         - etherpad
