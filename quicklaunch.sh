@@ -18,7 +18,7 @@ clean() {
     # Retire les configurations nginx
     sudo rm /etc/nginx/sites-enabled/tlc
     sudo service nginx restart
-    echo "\n"
+    echo ""
 }
 
 build_backend() {
@@ -26,7 +26,7 @@ build_backend() {
     cd api
     sudo docker build -t mhib/tlcbackend .
     sudo docker save -o backend.tar mhib/tlcbackend
-    echo "\n"
+    echo ""
     cd ..
 }
 
@@ -35,7 +35,7 @@ build_frontend() {
     cd front
     sudo docker build -t mhib/tlcfrontend .
     sudo docker save -o frontend.tar mhib/tlcfrontend
-    echo "\n"
+    echo ""
     cd ..
 }
 
@@ -47,7 +47,7 @@ push_images() {
     sudo docker push mhib/tlcfrontend
     sudo docker tag mhib/tlcbackend mhib/tlcbackend:latest
     sudo docker tag mhib/tlcfrontend mhib/tlcfrontend:latest
-    echo "\n"
+    echo ""
 }
 
 compose() {
@@ -62,7 +62,7 @@ config_dns() {
     sudo echo "127.0.0.1 api" >> /etc/hosts
     sudo echo "127.0.0.1 myadmin" >> /etc/hosts
     sudo echo "127.0.0.1 etherpad" >> /etc/hosts
-    echo "\n"
+    echo ""
     #TODO: Add DNS configuration based on docker network IP
 }
 
@@ -71,7 +71,7 @@ set_nginx_config(){
     sudo cp nginx.conf /etc/nginx/sites-available/tlc
     sudo ln -s /etc/nginx/sites-available/tlc /etc/nginx/sites-enabled/
     sudo service nginx restart
-    echo "\n"
+    echo ""
 }
 
 show_help() {
@@ -86,7 +86,7 @@ show_help() {
     echo "-C, --config-dns: Configure DNS IP addresses for the services"
     echo "-n, --nginx: Set up nginx configuration"
     echo "-a, --all: Clean, build and run all services"
-    echo "\n"
+    echo ""
 }
 
 if(( $# == 0 )); then
