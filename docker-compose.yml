@@ -33,7 +33,7 @@ services:
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
     healthcheck: # Attends que la base de données soit prête
-      test: ["CMD-SHELL", "mysqladmin ping -h db -u ${MYSQL_USER} -p ${MYSQL_PASSWORD}"]
+      test: ["CMD-SHELL", "mysqladmin ping -h db -u $$MYSQL_USER -p $$MYSQL_PASSWORD"]
       interval: 10s
       timeout: 5s
       retries: 10
