@@ -17,12 +17,18 @@ run_frontend() {
 clean() {
     echo "Cleaning up..."
     sudo docker-compose down
+
     sudo docker rmi mhib/tlcfrontend -f
     sudo docker rmi mhib/tlcbackend -f
+
     sudo sed -i '/# TLC/d' /etc/hosts
     sudo sed -i '/mhib.myadmin.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.doodle.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.pad.tlc.fr/d' /etc/hosts
+    sudo sed -i '/api/d' /etc/hosts
+    sudo sed -i '/myadmin/d' /etc/hosts
+    sudo sed -i '/etherpad/d' /etc/hosts
+
     sudo rm /etc/nginx/sites-enabled/tlc
     sudo service nginx restart
 }
@@ -38,6 +44,9 @@ config_dns() {
     sudo echo "127.0.0.1 mhib.myadmin.tlc.fr" >> /etc/hosts
     sudo echo "127.0.0.1 mhib.doodle.tlc.fr" >> /etc/hosts
     sudo echo "127.0.0.1 mhib.pad.tlc.fr" >> /etc/hosts
+    sudo echo "127.0.0.1 api" >> /etc/hosts
+    sudo echo "127.0.0.1 myadmin" >> /etc/hosts
+    sudo echo "127.0.0.1 etherpad" >> /etc/hosts
 }
 
 set_nginx_config(){
