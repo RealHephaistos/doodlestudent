@@ -10,4 +10,4 @@ RUN cd api &&\
 # Construction de l'images docker back-end
 FROM openjdk
 COPY --from=backend-build /app/api/target/tlcdemoApp-1.0.0-SNAPSHOT-runner.jar /app/
-CMD ["java", "-jar", "/app/java -jar tlcdemoApp-1.0.0-SNAPSHOT-runner.jar"]
+CMD ["java", "-jar", "/app/tlcdemoApp-1.0.0-SNAPSHOT-runner.jar"]
