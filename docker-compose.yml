@@ -7,7 +7,7 @@ services:
     container_name: container_frontend
     hostname: frontend
     ports:
-      - "8080:80" # HTTP
+      - "1080:80" # HTTP
       - "443:443" # HTTPS
     depends_on:
         - api
