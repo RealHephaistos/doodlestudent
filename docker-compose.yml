@@ -17,6 +17,8 @@ services:
     image: mhib/tlcbackend
     container_name: container_api
     hostname: api
+    ports:
+      - "15081:8080"
     depends_on:
         - db
 
