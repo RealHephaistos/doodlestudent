@@ -20,6 +20,7 @@ services:
     hostname: api
     depends_on:
         - db
+    restart: unless-stopped
 
   db:
     image: mysql
