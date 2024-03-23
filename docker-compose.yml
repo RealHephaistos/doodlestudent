@@ -26,6 +26,7 @@ services:
     ports:
       - "3306:3306"
     container_name: container_db
+    hostname: db
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=tlc
