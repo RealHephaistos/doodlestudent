@@ -23,6 +23,8 @@ clean() {
     sudo sed -i '/mhib.myadmin.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.doodle.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.pad.tlc.fr/d' /etc/hosts
+    sudo rm /etc/nginx/sites-enabled/tlc
+    sudo service nginx restart
 }
 
 compose() {
@@ -38,6 +40,13 @@ config_dns() {
     sudo echo "127.0.0.1 mhib.pad.tlc.fr" >> /etc/hosts
 }
 
+set_nginx_config(){
+    echo "Setting up nginx configuration..."
+    sudo cp nginx.conf /etc/nginx/sites-available/tlc
+    sudo ln -s /etc/nginx/sites-available/tlc /etc/nginx/sites-enabled/
+    sudo service nginx restart
+}
+
 show_help() {
     echo "Usage: quicklaunch.sh [OPTION]"
     echo "Options:"
@@ -47,6 +56,7 @@ show_help() {
     echo "-f, --front: Build and run the frontend service"
     echo "-d, --docker-compose: Run docker-compose"
     echo "-C, --config-dns: Configure DNS"
+    echo "-n, --nginx: Set up nginx configuration"
     echo "-a, --all: Clean, build and run all services"
 }
 
@@ -80,6 +90,10 @@ case $i in
     ;;
     -C|--config-dns)
     config_dns
+    shift
+    ;;
+    -n|--nginx)
+    set_nginx_config
     shift
     ;;
     -a | --all)
