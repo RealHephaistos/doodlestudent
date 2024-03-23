@@ -17,8 +17,8 @@ run_frontend() {
 clean() {
     echo "Cleaning up..."
     sudo docker-compose down
-    sudo docker rmi mhib/tlcfrontend
-    sudo docker rmi mhib/tlcbackend
+    sudo docker rmi mhib/tlcfrontend -f
+    sudo docker rmi mhib/tlcbackend -f
     sudo sed -i '/# TLC/d' /etc/hosts
     sudo sed -i '/mhib.myadmin.tlc.fr/d' /etc/hosts
     sudo sed -i '/mhib.doodle.tlc.fr/d' /etc/hosts
