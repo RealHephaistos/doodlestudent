@@ -1,11 +1,11 @@
 # Build du back-end de l'application
-FROM maven:3.6.3 as backend-build
+FROM openjdk as backend-build
 WORKDIR /app
 
 # Installation des dépendances et construction de l'application
 COPY . ./api
 RUN cd api &&\
-    mvn clean package -Dquarkus.package.type=uber-jar
+    ./mvnw clean package -Dquarkus.package.type=uber-jar
 
 # Construction de l'images docker back-end
 FROM openjdk
