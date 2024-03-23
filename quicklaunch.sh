@@ -7,8 +7,10 @@ clean() {
     sudo docker-compose down
 
     # Retire les images
-    sudo docker rmi mhib/tlcfrontend -f
-    sudo docker rmi mhib/tlcbackend -f
+    sudo docker rmi mhib/tlcfrontend:latest -f
+    sudo docker rmi mhib/tlcbackend:latest -f
+    sudo rm api/backend.tar
+    sudo rm front/frontend.tar
 
     # Retire les ips du fichier hosts
     sudo sed -i '/api/d' /etc/hosts
@@ -43,8 +45,6 @@ push_images() {
     echo "Pushing images to Docker registry..."
     sudo docker load -i api/backend.tar
     sudo docker load -i front/frontend.tar
-    sudo docker push mhib/tlcbackend
-    sudo docker push mhib/tlcfrontend
     sudo docker tag mhib/tlcbackend mhib/tlcbackend:latest
     sudo docker tag mhib/tlcfrontend mhib/tlcfrontend:latest
     echo ""
