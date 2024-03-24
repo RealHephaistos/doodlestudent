@@ -48,12 +48,6 @@ services:
     container_name: container_etherpad
     ports:
       - "9001:9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9001"] # Attends que Etherpad soit prêt
-      interval: 5s
-      timeout: 5s
-      retries: 20
-      start_period: 30s
     volumes:
       - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
 
