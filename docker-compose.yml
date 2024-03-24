@@ -9,11 +9,9 @@ services:
     ports:
       - "1080:80" # HTTP
     depends_on:
-      api:
-        condition: service_healthy
-      etherpad:
-        condition: service_healthy
-    restart: on-failure # Redémarre le service si l'API ou Etherpad ne sont pas prêts
+     - api
+     - etherpad
+    restart: always # Redémarre le service si l'API n'est pas prête ou qu'elle redémarre
 
   # Backend
   api:
@@ -24,12 +22,6 @@ services:
         db:
           condition: service_healthy
     restart: on-failure # Redémarre le service si la base de données n'est pas prête
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "db", "--user=$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"] # Attends que l'API soit prête
-      interval: 30s
-      timeout: 15s
-      retries: 20
-      start_period: 30s
 
   db:
     image: mysql
