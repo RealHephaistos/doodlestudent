@@ -34,10 +34,10 @@ services:
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
     healthcheck: # Attends que la base de données soit prête
-      test: ["CMD", "mysqladmin ping -h localhost --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--user=$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
       interval: 5s
       timeout: 5s
-      retries: 15
+      retries: 20
       start_period: 30s
     volumes:
       - ./db:docker-entrypoint-initdb.d # Stocke les données de la base de données
