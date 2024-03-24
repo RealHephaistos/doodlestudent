@@ -1,0 +1,25 @@
+stages:
+  - prepare
+  - clean
+  - deploy
+
+variables:
+  PROJECT_NAME: "Projet TLC"
+
+prepare:
+  stage: prepare
+  script:
+    - echo "Preparation du projet $PROJECT_NAME
+    - chmod +x quicklaunch.sh
+
+clean:
+  stage: clean
+  script:
+    - echo "Nettoyage du projet $PROJECT_NAME"
+    - chmod +x quicklaunch.sh -c
+
+deploy:
+  stage: build
+  script:
+    - chmod +x quicklaunch.sh
+    - ./quicklaunch.sh -b -f -l -d
