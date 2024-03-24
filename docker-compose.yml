@@ -40,7 +40,7 @@ services:
       retries: 20
       start_period: 30s
     volumes:
-      - ./db:docker-entrypoint-initdb.d # Stocke les données de la base de données
+      - ./db:/var/lib/mysql # Stocke les données de la base de données
 
   etherpad:
     image: etherpad/etherpad
