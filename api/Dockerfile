@@ -5,7 +5,7 @@ WORKDIR /app
 # Installation des dépendances et construction de l'application
 COPY . ./api
 RUN cd api &&\
-    ./mvnw clean package -Dquarkus.package.type=uber-jar -Dquarkus.native.container-build=true
+    ./mvnw clean package -Dquarkus.package.type=uber-jar
 
 # Construction de l'images docker back-end
 FROM openjdk
