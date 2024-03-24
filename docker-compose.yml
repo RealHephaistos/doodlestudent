@@ -39,6 +39,8 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
+    volumes:
+      - ./db:/var/lib/mysql # Stocke les données de la base de données
 
   etherpad:
     image: etherpad/etherpad
