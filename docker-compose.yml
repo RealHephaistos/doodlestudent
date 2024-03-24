@@ -8,7 +8,6 @@ services:
     hostname: frontend
     ports:
       - "1080:80" # HTTP
-      - "443:443" # HTTPS
     depends_on:
         - api
         - etherpad
