@@ -7,13 +7,14 @@ services:
     container_name: container_frontend
     hostname: frontend
     ports:
-      - "1080:80" # HTTP
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
     depends_on:
      - api
      - etherpad
     restart: always # Redémarre le service si l'API n'est pas prête ou qu'elle redémarre
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.d/default.conf # Configuration du serveur web
+      - ./nginx.conf:/etc/nginx/conf.d/tlc.conf # Configuration du serveur web
 
   # Backend
   api:
