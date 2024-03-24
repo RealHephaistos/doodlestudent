@@ -36,8 +36,8 @@ build_frontend() {
     cd ..
 }
 
-push_images() {
-    echo "Pushing images to Docker registry..."
+load_images() {
+    echo "Loading and tagging images..."
     sudo docker load -i api/backend.tar
     sudo docker load -i front/frontend.tar
     sudo docker tag mhib/tlcbackend mhib/tlcbackend:latest
@@ -66,7 +66,7 @@ show_help() {
     echo "-c, --clean: Clean up docker containers and images"
     echo "-b, --backend: Build and save the backend image"
     echo "-f, --front: Build and save the frontend image"
-    echo "-p, --push: Push images to Docker registry"
+    echo "-l, --load: Load images to Docker registry"
     echo "-d, --docker-compose: Run docker-compose"
     echo "-n, --nginx: Set up nginx configuration"
     echo "-a, --all: Clean, build and run all services"
@@ -97,8 +97,8 @@ do
             build_frontend
             shift
         ;;
-        -p|--push)
-            push_images
+        -l|--load)
+            load_images
             shift
         ;;
         -d|--docker-compose)
@@ -111,12 +111,11 @@ do
         ;;
         -a | --all)
             clean
+            set_nginx_config
             build_backend
             build_frontend
-            push_images
+            load_images
             compose
-            config_dns
-            set_nginx_config
             shift
         ;;
         *)
