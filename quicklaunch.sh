@@ -11,12 +11,6 @@ clean() {
     sudo docker rmi mhib/tlcbackend:latest -f
     sudo rm api/backend.tar
     sudo rm front/frontend.tar
-
-    # Retire les configurations nginx
-    echo "Removing nginx configuration..."
-    sudo rm -rf /etc/nginx/sites-enabled/tlc
-    sudo rm -rf /etc/nginx/sites-available/tlc
-    sudo service nginx restart
     echo ""
 }
 
@@ -53,14 +47,6 @@ compose() {
     echo ""
 }
 
-set_nginx_config(){
-    echo "Setting up nginx configuration..."
-    sudo cp nginx.conf /etc/nginx/sites-available/tlc
-    sudo ln -s /etc/nginx/sites-available/tlc /etc/nginx/sites-enabled/
-    sudo service nginx restart
-    echo ""
-}
-
 show_help() {
     echo "Usage: quicklaunch.sh [OPTION]"
     echo "Options:"
@@ -70,7 +56,6 @@ show_help() {
     echo "-f, --front: Build and save the frontend image"
     echo "-l, --load: Load images to Docker registry"
     echo "-d, --docker-compose: Run docker-compose"
-    echo "-n, --nginx: Set up nginx configuration"
     echo "-a, --all: Clean, build and run all services"
     echo ""
 }
@@ -107,17 +92,12 @@ do
             compose
             shift
         ;;
-        -n|--nginx)
-            set_nginx_config
-            shift
-        ;;
         -a | --all)
             clean
             build_backend
             build_frontend
             load_images
             compose
-            set_nginx_config
             shift
         ;;
         *)
