@@ -8,7 +8,6 @@ services:
     hostname: frontend
     ports:
       - "80:80" # HTTP
-      - "443:443" # HTTPS
     depends_on:
      - api
      - etherpad
@@ -21,6 +20,8 @@ services:
     image: mhib/tlcbackend
     container_name: container_api
     hostname: api
+    ports:
+      - "8080:8080"
     depends_on:
         db:
           condition: service_healthy
