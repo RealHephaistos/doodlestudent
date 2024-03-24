@@ -23,7 +23,7 @@ clean() {
 build_backend() {
     echo "Building backend image and saving it as .tar..."
     cd api
-    sudo docker build -t mhib/tlcbackend .
+    sudo docker build -f Dockerfile -t mhib/tlcbackend .
     sudo docker save -o backend.tar mhib/tlcbackend
     echo ""
     cd ..
@@ -32,7 +32,7 @@ build_backend() {
 build_frontend() {
     echo "Building backend image and saving it as .tar..."
     cd front
-    sudo docker build -t mhib/tlcfrontend .
+    sudo docker build -f Dockerfile -t mhib/tlcfrontend .
     sudo docker save -o frontend.tar mhib/tlcfrontend
     echo ""
     cd ..
