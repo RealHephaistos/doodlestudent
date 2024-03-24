@@ -21,7 +21,7 @@ services:
     depends_on:
         db :
           condition: service_healthy
-    restart: on_failure # Redémarre le service si la base de données n'est pas prête
+    restart: on-failure # Redémarre le service si la base de données n'est pas prête
 
   db:
     image: mysql
