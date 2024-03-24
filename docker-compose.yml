@@ -21,11 +21,11 @@ services:
     container_name: container_api
     hostname: api
     depends_on:
-        db :
+        db:
           condition: service_healthy
     restart: on-failure # Redémarre le service si la base de données n'est pas prête
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"] # Attends que l'API soit prête
+      test: ["CMD", "mysqladmin", "ping", "--user=$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"] # Attends que l'API soit prête
       interval: 5s
       timeout: 5s
       retries: 20
@@ -43,7 +43,7 @@ services:
       - MYSQL_USER=tlc
       - MYSQL_PASSWORD=tlc
     healthcheck: # Attends que la base de données soit prête
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--user=$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "db", "--user=$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
       interval: 5s
       timeout: 5s
       retries: 20
