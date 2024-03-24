@@ -9,8 +9,11 @@ services:
     ports:
       - "1080:80" # HTTP
     depends_on:
-        - api
-        - etherpad
+      api:
+        condition: service_healthy
+      etherpad:
+        condition: service_healthy
+    restart: on-failure # Redémarre le service si l'API ou Etherpad ne sont pas prêts
 
   # Backend
   api:
@@ -21,6 +24,12 @@ services:
         db :
           condition: service_healthy
     restart: on-failure # Redémarre le service si la base de données n'est pas prête
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"] # Attends que l'API soit prête
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
   db:
     image: mysql
@@ -47,6 +56,12 @@ services:
     container_name: container_etherpad
     ports:
       - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001"] # Attends que Etherpad soit prêt
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
     volumes:
       - ./APIKEY.txt:/opt/etherpad-lite/APIKEY.txt
 
