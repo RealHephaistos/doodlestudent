@@ -13,6 +13,7 @@ clean() {
     sudo rm front/frontend.tar
 
     # Retire les configurations nginx
+    echo "Removing nginx configuration..."
     sudo rm -rf /etc/nginx/sites-enabled/tlc
     sudo rm -rf /etc/nginx/sites-available/tlc
     sudo service nginx restart
@@ -112,11 +113,11 @@ do
         ;;
         -a | --all)
             clean
-            set_nginx_config
             build_backend
             build_frontend
             load_images
             compose
+            set_nginx_config
             shift
         ;;
         *)
