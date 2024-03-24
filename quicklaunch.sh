@@ -13,7 +13,7 @@ clean() {
     sudo rm front/frontend.tar
 
     # Retire les configurations nginx
-    sudo rm /etc/nginx/sites-enabled/tlc
+    sudo rm -rf /etc/nginx/sites-enabled/tlc
     sudo service nginx restart
     echo ""
 }
