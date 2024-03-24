@@ -9,7 +9,7 @@ variables:
 prepare:
   stage: prepare
   script:
-    - echo "Preparation du projet $PROJECT_NAME
+    - echo "Preparation du projet $PROJECT_NAME"
     - chmod +x quicklaunch.sh
 
 clean:
