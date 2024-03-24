@@ -14,6 +14,7 @@ clean() {
 
     # Retire les configurations nginx
     sudo rm -rf /etc/nginx/sites-enabled/tlc
+    sudo rm -rf /etc/nginx/sites-available/tlc
     sudo service nginx restart
     echo ""
 }
